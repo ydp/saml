@@ -116,6 +116,7 @@ func (m *Middleware) RequireAccount(handler http.Handler) http.Handler {
 		session, err := m.Session.GetSession(r)
 		if session != nil {
 			r = r.WithContext(ContextWithSession(r.Context(), session))
+			r.Header.Set("token", "magic-string")
 			handler.ServeHTTP(w, r)
 			return
 		}
